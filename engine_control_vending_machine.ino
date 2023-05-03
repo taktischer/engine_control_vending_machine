@@ -1,24 +1,29 @@
 short current_direction = 0;
 int start = 0;
+
+#define MOTOR_FORWARD_PIN 2
+#define MOTOR_BACKWARDS_PIN 4
+#define SENSOR_PIN 5
+
 void setup()
 {
-    // set pin 0 and 1 to output
-    pinMode(0, OUTPUT);
-    pinMode(1, OUTPUT);
+    // set MOTOR_FORWARD_PIN and MOTOR_BACKWARDS_PIN to output
+    pinMode(MOTOR_FORWARD_PIN, OUTPUT);
+    pinMode(MOTOR_BACKWARDS_PIN, OUTPUT);
 
-    // set pin 2 to input
-    pinMode(2, INPUT);
+    // set SENSOR_PIN to input
+    pinMode(SENSOR_PIN, INPUT);
     
     // reset the pins
-    digitalWrite(0, 0);
-    digitalWrite(1, 0);
+    digitalWrite(MOTOR_FORWARD_PIN, 0);
+    digitalWrite(MOTOR_BACKWARDS_PIN, 0);
 }
 
 
 void loop()
 {
-    // check if button is pressed (connected to pin 2)
-    if (digitalRead(2) == 1){
+    // check if SENSOR_PIN gets an active value
+    if (digitalRead(SENSOR_PIN) != 0){
         if (start==0){
             // set start to current runtime (milliseconds)
             start = millis();
@@ -37,9 +42,9 @@ void loop()
                 current_direction = 0;
             }
         }
-        // reset start and both LEDs
+        // reset start and both MOTOR_PINS
         start = 0;
-        digitalWrite(0, 0);
-        digitalWrite(1, 0);
+        digitalWrite(MOTOR_FORWARD_PIN, 0);
+        digitalWrite(MOTOR_BACKWARDS_PIN, 0);
     }
 }
